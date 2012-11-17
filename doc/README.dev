@@ -1,0 +1,17 @@
+echo 'rvm 1.9.3-p194@xfiles --create' > .rvmrc; cd ..; cd -
+
+rails generate scaffold xfile name:string slug:string text:text html:text markdown:boolean sticky:boolean position:integer secret:boolean tags:string
+
+erector app/views
+rm app/views/*/*.html.erb
+
+rake db:create
+db/development.sqlite3 already exists
+rake db:migrate
+
+# config/routes.rb
+root :to => 'xfiles#index'
+
+rm public/index.html
+ln -sf `pwd` ~/.pow/xfiles # assumes POW - to open in browser: xfiles.dev
+ln -sf ~/Library/Logs/Pow/apps/xfiles.log log/pow.log
